@@ -1,0 +1,12 @@
+[11180:26964:0606/082215.886:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[11180:26964:0606/082215.924:WARNING:chrome\browser\extensions\extension_service.cc:359] --load-extension is not allowed in Google Chrome, ignoring.
+[9636:36796:0606/082216.058:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[10304:35888:0606/082216.058:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[2488:8288:0606/082216.084:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[11300:37392:0606/082216.493:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[19008:23800:0606/082216.510:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[11180:26964:0606/082216.849:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yk/r/Xp67_nfEfKT.js (163)
+[29208:9408:0606/082217.196:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[1728:36184:0606/082223.494:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[11180:26964:0606/082224.147:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yk/r/Xp67_nfEfKT.js (163)
+[11180:26964:0606/082230.663:INFO:CONSOLE:359] "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently", source: https://static.whatsapp.net/rsrc.php/v4i4Dj4/yr/l/rt/k3czDb_wb8Yux_Mn6YHiBtzYN0Bo2FICycmcgfZ2BrznuZrKNxYX2giXk-2IU7N69wBWj335tmwRomD_CC6Trp1hzaXIEoAubYvG_AUzITVDxzQHbrXKK3kvPW8-DyXoix_QnDJyngn8Ivqpr6Snq9zCJnTj9G12HU1HV05qaWJMJDnf.js (359)

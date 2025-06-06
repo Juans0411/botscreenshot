@@ -1,0 +1,15 @@
+[3972:25436:0604/093340.560:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[28492:18580:0604/093340.743:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[17732:28936:0604/093340.748:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[29132:19160:0604/093340.786:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[32040:29148:0604/093341.123:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[28032:26712:0604/093341.185:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[3972:25436:0604/093341.550:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y8/r/Oyu_3j2TcrJ.js (163)
+[29132:19756:0604/093341.819:WARNING:ui\gl\angle_platform_impl.cc:54] HLSLCompiler.cpp:250 (rx::HLSLCompiler::compileToBinary): 
+C:\fakepath(130,3-70): warning X3557: loop only executes for 1 iteration(s), forcing loop to unroll
+
+[23164:21396:0604/093341.830:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[33940:29732:0604/093344.455:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[3972:25436:0604/093345.938:INFO:CONSOLE:162] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yG/r/KKPDlmG7Kvy.js (162)
+[30556:29212:0604/093347.483:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.
+[30556:29212:0604/093347.483:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.
