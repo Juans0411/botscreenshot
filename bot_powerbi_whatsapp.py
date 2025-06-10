@@ -11,22 +11,21 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-from webdriver_manager.chrome import ChromeDriverManager
 from pathlib import Path
 
-# === CONFIGURACIÓN ===
-CONTACTO = "+57 321 7877709"
+# CONFIGURACION
+CONTACTO = "CRM (CARGA) RESIDENCIAL"
 POWERBI_TITULO = "JMRS.DB - VD DIARIO Y MENSUAL"
-REGION = (180, 120, 960, 530)
+REGION = (180, 130, 960, 530)
 CAPTURA_DIR = Path(__file__).parent / "Capturas"
 CAPTURA_DIR.mkdir(exist_ok=True)
 
-# === FUNCIONES ===
+# FUNCIONES
 def buscar_ventana(titulo):
     print("[INFO] Buscando Power BI...")
     ventanas = gw.getWindowsWithTitle(titulo)
     if not ventanas:
-        raise Exception("No se encontró Power BI abierto con el titulo especificado.")
+        raise Exception("No se encontró Power BI abierto con el título especificado.")
     ventana = ventanas[0]
     ventana.activate()
     ventana.maximize()
@@ -34,11 +33,25 @@ def buscar_ventana(titulo):
     print("[OK] Ventana de Power BI activa.")
     return ventana
 
+def obtener_hora_corte_es():
+    ahora = datetime.now(pytz.timezone("Europe/Madrid"))
+    hora = ahora.hour
+    minuto = ahora.minute
+
+    if minuto < 30:
+        minuto_redondeado = 0
+    else:
+        minuto_redondeado = 30
+
+    hora_formateada = f"{hora:02d}:{minuto_redondeado:02d}"
+    return hora_formateada
+
 def tomar_captura(ventana, region):
     print("[INFO] Tomando captura...")
+    hora_corte = obtener_hora_corte_es().replace(":", "")
     captura = pyautogui.screenshot(region=(ventana.left + region[0], ventana.top + region[1], region[2], region[3]))
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    ruta = CAPTURA_DIR / f"captura_{timestamp}.png"
+    timestamp = datetime.now().strftime("%Y%m%d")
+    ruta = CAPTURA_DIR / f"captura_{timestamp}_{hora_corte}.png"
     captura.save(ruta)
     print("[OK] Captura guardada en:", ruta)
     return str(ruta)
@@ -48,7 +61,9 @@ def iniciar_navegador():
     options = webdriver.ChromeOptions()
     options.add_argument(f"--user-data-dir={os.getcwd()}/chrome_selenium_profile")
     options.add_argument("--start-maximized")
-    service = Service(ChromeDriverManager().install())
+
+    driver_path = str(Path(__file__).parent / "driver" / "chromedriver.exe")
+    service = Service(driver_path)
     return webdriver.Chrome(service=service, options=options)
 
 def esperar_whatsapp(driver):
@@ -99,12 +114,10 @@ def enviar_mensaje(driver):
     time.sleep(1)
     send_button.click()
 
-def obtener_hora_es():
-    return datetime.now(pytz.timezone("Europe/Madrid")).strftime("%H:%M")
-
-# === EJECUCIÓN PRINCIPAL ===
+# EJECUCIÓN PRINCIPAL
 try:
     ventana = buscar_ventana(POWERBI_TITULO)
+    hora = obtener_hora_corte_es()
     ruta_captura = tomar_captura(ventana, REGION)
 
     driver = iniciar_navegador()
@@ -112,7 +125,6 @@ try:
     esperar_whatsapp(driver)
 
     buscar_contacto(driver, CONTACTO)
-    hora = obtener_hora_es()
     escribir_mensaje(driver, hora)
     adjuntar_imagen(driver, ruta_captura)
     enviar_mensaje(driver)
