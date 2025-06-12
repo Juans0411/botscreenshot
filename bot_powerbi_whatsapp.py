@@ -14,7 +14,7 @@ from selenium.webdriver.common.keys import Keys
 from pathlib import Path
 
 # CONFIGURACION
-CONTACTO = "CRM (CARGA) RESIDENCIAL"
+CONTACTO = "Sago"
 POWERBI_TITULO = "JMRS.DB - VD DIARIO Y MENSUAL"
 REGION = (180, 130, 960, 530)
 CAPTURA_DIR = Path(__file__).parent / "Capturas"
