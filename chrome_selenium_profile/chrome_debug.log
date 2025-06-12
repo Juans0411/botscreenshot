@@ -1,9 +1,12 @@
-[13380:14628:0612/112441.296:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
-[4744:21472:0612/112441.489:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[18876:5604:0612/112441.501:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[1456:25856:0612/112441.509:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
-[25308:10584:0612/112441.919:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[16288:25788:0612/112442.008:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[13380:14628:0612/112442.330:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yS/r/MLoXqVp-g8f.js (163)
-[27492:19116:0612/112442.642:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
-[13380:14628:0612/112456.207:INFO:CONSOLE:581] "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently", source: https://static.whatsapp.net/rsrc.php/v4iPuD4/yq/l/rt/oanJr_zuXIW6NbX_JiQu5mux_Mn6YHiBtuQ_a3cZbCLpcmcgfZ2Brzn2dDsB8mjg2bQ42Ep5p_kNNwdSLLt122faQLAsKqZBCyK3el9QiF7TR3owZbARJ8BgX5Dtm8pB6DIkpr6Snq9zCJnhmUxWTZdkIpdxD1yFazdpENx4_cCks6jcH_DlkVED0XjJBIpzy1lH0d.js (581)
+[19024:23016:0612/142716.128:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[15216:13336:0612/142716.322:VERBOSE1:components\viz\service\main\viz_main_impl.cc:85] VizNullHypothesis is disabled (not a warning)
+[30276:10396:0612/142716.326:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[9240:17132:0612/142716.333:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[29692:10860:0612/142716.761:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[26964:13944:0612/142716.796:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[19024:23016:0612/142717.134:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yS/r/MLoXqVp-g8f.js (163)
+[24816:22832:0612/142717.450:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[25876:31104:0612/142720.206:INFO:third_party\webrtc\system_wrappers\source\cpu_info.cc:56] Available number of cores: 8
+[19024:23016:0612/142721.028:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yS/r/MLoXqVp-g8f.js (163)
+[19024:23016:0612/142721.310:INFO:CONSOLE:163] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yS/r/MLoXqVp-g8f.js (163)
+[19024:23016:0612/142731.258:INFO:CONSOLE:581] "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently", source: https://static.whatsapp.net/rsrc.php/v4iPuD4/yq/l/rt/oanJr_zuXIW6NbX_JiQu5mux_Mn6YHiBtuQ_a3cZbCLpcmcgfZ2Brzn2dDsB8mjg2bQ42Ep5p_kNNwdSLLt122faQLAsKqZBCyK3el9QiF7TR3owZbARJ8BgX5Dtm8pB6DIkpr6Snq9zCJnhmUxWTZdkIpdxD1yFazdpENx4_cCks6jcH_DlkVED0XjJBIpzy1lH0d.js (581)

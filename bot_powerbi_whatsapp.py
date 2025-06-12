@@ -16,7 +16,7 @@ from pathlib import Path
 # CONFIGURACION
 CONTACTO = "Sago"
 POWERBI_TITULO = "JMRS.DB - VD DIARIO Y MENSUAL"
-REGION = (180, 130, 960, 530)
+REGION = (168, 120, 985, 543)
 CAPTURA_DIR = Path(__file__).parent / "Capturas"
 CAPTURA_DIR.mkdir(exist_ok=True)
 
