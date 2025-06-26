@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Power BI Bot</title>
+    <style>
+        #container {
+            border: 2px solid black;
+            padding: 10px;
+            width: 600px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        #div1, #div2 {
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+        #buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+        }
+        img {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="div1">
+            <label for="contacto">Contacto:</label>
+            <input type="text" id="contacto" placeholder="Nombre o número de WhatsApp" required>
+            <div id="buttons">
+                <button onclick="startScript()">Iniciar</button>
+                <button onclick="stopScript()">Detener</button>
+            </div>
+        </div>
+        <div id="div2">
+            <pre id="output">Esperando proceso...</pre>
+            <hr>
+            <h4>Última captura enviada:</h4>
+            <img id="captura" src="/ultima_captura" width="100%" alt="Captura aún no disponible">
+        </div>
+    </div>
+
+    <script>
+        function startScript() {
+            const output = document.getElementById("output");
+            const contacto = document.getElementById("contacto").value.trim();
+            if (!contacto) {
+                alert("Por favor, ingresa el nombre o número del contacto.");
+                return;
+            }
+
+            output.textContent = "Esperando proceso...\n";
+
+            fetch("/start", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ contacto: contacto })
+            }).then(() => pollLogs());
+        }
+
+        function stopScript() {
+            fetch("/stop", {method: "POST"})
+                .then(response => response.json())
+                .then(data => {
+                    const output = document.getElementById("output");
+                    if (data.status === "terminated") {
+                        output.textContent += "\n[INFO] Proceso detenido manualmente.\n";
+                    } else {
+                        output.textContent += "\n[INFO] No había un proceso en ejecución.\n";
+                    }
+                    output.scrollTop = output.scrollHeight;
+                });
+        }
+
+        function pollLogs() {
+            fetch("/logs")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.log !== undefined && data.log.trim() !== "") {
+                        const output = document.getElementById("output");
+                        output.textContent += data.log;
+                        output.scrollTop = output.scrollHeight;
+                        document.getElementById("captura").src = "/ultima_captura?" + new Date().getTime();
+                        setTimeout(pollLogs, 1000);
+                    } else {
+                        setTimeout(pollLogs, 1000);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

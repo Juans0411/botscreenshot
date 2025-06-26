@@ -1,3 +1,5 @@
-2025/06/12-14:25:22.130 35cc Reusing MANIFEST c:\Users\jszapatam\Documents\botscreenshot\chrome_selenium_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2025/06/12-14:25:22.141 35cc Recovering log #46
-2025/06/12-14:25:22.144 35cc Reusing old log c:\Users\jszapatam\Documents\botscreenshot\chrome_selenium_profile\Default\Local Storage\leveldb/000046.log 
+2025/06/26-12:38:23.595 a118 Reusing MANIFEST c:\Users\jszapatam\Documents\botscreenshot\chrome_selenium_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2025/06/26-12:38:23.609 a118 Recovering log #98
+2025/06/26-12:38:23.609 a118 Level-0 table #101: started
+2025/06/26-12:38:23.620 a118 Level-0 table #101: 11296 bytes OK
+2025/06/26-12:38:23.629 a118 Delete type=0 #98

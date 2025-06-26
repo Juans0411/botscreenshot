@@ -3,7 +3,7 @@ import pyautogui
 import time
 import os
 import pytz
-import traceback
+import sys
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,14 +13,22 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from pathlib import Path
 
-# CONFIGURACION
-CONTACTO = "Sago"
+# Forzar impresión inmediata
+sys.stdout.reconfigure(line_buffering=True)
+
+# Obtener contacto desde argumento
+if len(sys.argv) < 2:
+    print("[ERROR] No se recibió el contacto.")
+    exit()
+
+CONTACTO = sys.argv[1]
+
+# CONFIGURACIÓN
 POWERBI_TITULO = "JMRS.DB - VD DIARIO Y MENSUAL"
 REGION = (168, 120, 985, 543)
 CAPTURA_DIR = Path(__file__).parent / "Capturas"
 CAPTURA_DIR.mkdir(exist_ok=True)
 
-# FUNCIONES
 def buscar_ventana(titulo):
     print("[INFO] Buscando Power BI...")
     ventanas = gw.getWindowsWithTitle(titulo)
@@ -35,16 +43,8 @@ def buscar_ventana(titulo):
 
 def obtener_hora_corte_es():
     ahora = datetime.now(pytz.timezone("Europe/Madrid"))
-    hora = ahora.hour
-    minuto = ahora.minute
-
-    if minuto < 30:
-        minuto_redondeado = 0
-    else:
-        minuto_redondeado = 30
-
-    hora_formateada = f"{hora:02d}:{minuto_redondeado:02d}"
-    return hora_formateada
+    minuto_redondeado = 0 if ahora.minute < 30 else 30
+    return f"{ahora.hour:02d}:{minuto_redondeado:02d}"
 
 def tomar_captura(ventana, region):
     print("[INFO] Tomando captura...")
@@ -61,38 +61,49 @@ def iniciar_navegador():
     options = webdriver.ChromeOptions()
     options.add_argument(f"--user-data-dir={os.getcwd()}/chrome_selenium_profile")
     options.add_argument("--start-maximized")
-
     driver_path = str(Path(__file__).parent / "driver" / "chromedriver.exe")
-    service = Service(driver_path)
-    return webdriver.Chrome(service=service, options=options)
+    return webdriver.Chrome(service=Service(driver_path), options=options)
 
 def esperar_whatsapp(driver):
     print("[INFO] Esperando que cargue WhatsApp Web...")
     WebDriverWait(driver, 120).until(
         lambda d: d.find_elements(By.XPATH, '//div[@contenteditable="true" and contains(@data-tab,"3")]')
     )
-    print("[OK] WhatsApp Web está listo para buscar contactos.")
+    print("[OK] WhatsApp Web está listo.")
 
 def buscar_contacto(driver, nombre):
-    print("[INFO] Buscando contacto seleccionado...")
-    search_box = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true" and contains(@data-tab,"3")]'))
-    )
-    search_box.click()
-    search_box.clear()
-    search_box.send_keys(nombre)
-    time.sleep(2)
-    search_box.send_keys(Keys.DOWN)
-    search_box.send_keys(Keys.ENTER)
-    print("[OK] Chat abierto con coincidencia.")
+    print(f"[INFO] Buscando contacto: {nombre}...")
+    try:
+        search_box = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true" and contains(@data-tab,"3")]'))
+        )
+        search_box.click()
+        search_box.clear()
+        search_box.send_keys(nombre)
+        time.sleep(2)
+
+        resultados = driver.find_elements(By.XPATH, f'//span[contains(@title, "{nombre}")]')
+        if not resultados:
+            raise Exception(f"[ERROR] No se encontró el contacto '{nombre}' en WhatsApp.")
+
+        resultados[0].click()
+        print(f"[OK] Chat abierto con: {nombre}")
+
+    except Exception as e:
+        raise e  # Se maneja desde el bloque principal
 
 def escribir_mensaje(driver, mensaje):
     print("[INFO] Escribiendo mensaje...")
-    input_box = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true" and @data-tab="10"]'))
-    )
-    input_box.send_keys(mensaje)
-    time.sleep(0.5)
+    try:
+        input_box = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, '//footer//div[@contenteditable="true"]'))
+        )
+        input_box.click()
+        input_box.send_keys(mensaje)
+        time.sleep(0.5)
+    except Exception as e:
+        print("[ERROR] No se pudo escribir el mensaje.")
+        print(e)
 
 def adjuntar_imagen(driver, ruta):
     print("[INFO] Adjuntando imagen...")
@@ -107,7 +118,7 @@ def adjuntar_imagen(driver, ruta):
     print("[OK] Imagen seleccionada.")
 
 def enviar_mensaje(driver):
-    print("[INFO] Enviando...")
+    print("[INFO] Enviando mensaje...")
     send_button = WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.XPATH, '//div[@role="button"][@aria-label="Enviar"]'))
     )
@@ -129,14 +140,12 @@ try:
     adjuntar_imagen(driver, ruta_captura)
     enviar_mensaje(driver)
 
-    try:
-        print("[OK] Mensaje enviado correctamente.")
-    except UnicodeEncodeError:
-        print("[OK] Mensaje enviado correctamente (caracteres especiales en contacto).")
+    print("[OK] Mensaje enviado correctamente.")
 
-except Exception:
-    print("[ERROR] Ocurrió un problema al enviar el mensaje:")
-    traceback.print_exc()
+except Exception as e:
+    print(str(e))
+    if "[ERROR] No se encontró el contacto" in str(e):
+        print("[SUGERENCIA] Verifica que hayas escrito el nombre o número exactamente como aparece en WhatsApp Web.")
 
 finally:
     print("[FIN] Proceso finalizado.")
