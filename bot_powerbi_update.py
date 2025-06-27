@@ -1,56 +1,41 @@
-import time
-import pyautogui
-import pygetwindow as gw
-import subprocess
-import sys
+import time, sys, subprocess
+import pyautogui, pygetwindow as gw
 
-# Forzar salida inmediata de print()
+# salida en tiempo real
 sys.stdout.reconfigure(line_buffering=True)
+sys.stderr.reconfigure(line_buffering=True)
 
-# Obtener el contacto desde argumentos
 if len(sys.argv) < 2:
-    print("[ERROR] No se recibió el contacto.")
-    exit()
-
+    print("[ERROR] Falta el contacto.")
+    sys.exit(1)
 CONTACTO = sys.argv[1]
 
-# CONFIGURACIÓN
-nombre_archivo_pbix = "JMRS.DB - VD DIARIO Y MENSUAL"
-imagen_boton = 'actualizar.png'
-tiempo_espera_actualizacion = 30  # segundos
+PB_TITLE = "JMRS.DB - VD DIARIO Y MENSUAL"
+BTN_IMG = "actualizar.png"
+WAIT_SEC = 30
 
-print(f"Buscando ventana de Power BI...")
-ventanas = gw.getWindowsWithTitle(nombre_archivo_pbix)
+def activate_window(title):
+    print("[INFO] Buscando ventana de Power BI...")
+    wins = gw.getWindowsWithTitle(title)
+    if not wins:
+        print(f"[ERROR] No hallé '{title}'."); sys.exit(1)
+    w = wins[0]
+    if w.isMinimized: w.restore()
+    w.activate(); time.sleep(3)
+    print("[OK] Ventana lista.")
+    return w
 
-if ventanas:
-    ventana = ventanas[0]
-    if ventana.isMinimized:
-        ventana.restore()
-    ventana.activate()
-    print(f"Ventana activada.")
-    time.sleep(3)
-else:
-    print(f"No se encontró ninguna ventana de Power BI con el nombre: '{nombre_archivo_pbix}'.")
-    exit()
+def click_update(btn_img):
+    print("[INFO] Buscando botón 'Actualizar'...")
+    loc = pyautogui.locateCenterOnScreen(btn_img, confidence=0.8)
+    if not loc:
+        print("[ERROR] Botón no encontrado."); sys.exit(1)
+    pyautogui.click(loc)
+    print(f"[OK] Actualizando...espera {WAIT_SEC}s")
+    time.sleep(WAIT_SEC)
 
-print("Buscando el botón 'Actualizar' en pantalla...")
-try:
-    button_location = pyautogui.locateCenterOnScreen(imagen_boton, confidence=0.8)
-    if button_location:
-        pyautogui.moveTo(button_location)
-        pyautogui.click()
-        print("Botón 'Actualizar' encontrado y en ejecución.")
-    else:
-        raise Exception("Botón no encontrado.")
-except Exception as e:
-    print("Error:", e)
-    pyautogui.screenshot("pantalla_debug.png")
-    print("Captura guardada como 'pantalla_debug.png'. Revisa la imagen.")
-    exit()
-
-print(f"\nEsperando {tiempo_espera_actualizacion} segundos para completar la actualización...\n")
-time.sleep(tiempo_espera_actualizacion)
-
-print("[OK] Proceso de actualización finalizado. Enviando captura por WhatsApp...")
-
-subprocess.run(["python", "bot_powerbi_whatsapp.py", CONTACTO], check=True)
+if __name__ == "__main__":
+    win = activate_window(PB_TITLE)
+    click_update(BTN_IMG)
+    print("[OK] Actualización lista. Llamo al envío por WhatsApp.")
+    subprocess.run(["python", "bot_powerbi_whatsapp.py", CONTACTO], check=True)
